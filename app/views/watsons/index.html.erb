@@ -1,0 +1,7 @@
+<h1>Here are all of your texts.</h1>
+
+<% @watsons.each do |watson| %>
+    <%= link_to watson.text, watson_path(watson) %>
+    <br>
+    <hr>
+<% end %>
