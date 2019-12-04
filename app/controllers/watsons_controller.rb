@@ -13,35 +13,25 @@ class WatsonsController < ApplicationController
   end
 
   def create
-    #response(watson.text)
-    @watson = params["watson"]["text"]
-
-    authenticator = Authenticators::IamAuthenticator.new(apikey: "")
-    natural_language_understanding = NaturalLanguageUnderstandingV1.new(
-    version: "2019-07-12",
-    authenticator: authenticator)
-
-    natural_language_understanding.service_url = ""
-    
-    response = natural_language_understanding.analyze(
-      text: "#{@watson}",
-      features: {emotion: {}, categories: {limit:3}, entities: {limit:3}, keywords: {limit:3}, relations: {limit:3},  sentiment:{}})
-    @result_hash = response.result
-    
-    Watson.create(
-      text: @watson,
-      sentiment_label: @result_hash["sentiment"]['document']['label'],
-      sentiment_score: @result_hash["sentiment"]['document']['score'],
-      emotion_sadness: @result_hash['emotion']['document']['emotion']['sadness'],
-      emotion_joy: @result_hash['emotion']['document']['emotion']['joy'],
-      emotion_fear: @result_hash['emotion']['document']['emotion']['fear'],
-      emotion_disgust: @result_hash['emotion']['document']['emotion']['disgust'],
-      emotion_anger: @result_hash['emotion']['document']['emotion']['anger'],
-      keywords: @result_hash['keywords'],
-      categories: @result_hash['categories'],
-      entities: @result_hash['entities']
-    )
-    redirect_to watson_path(Watson.last.id)
+    @watson_text = params["watson"]["text"]    
+    if @watson_text.empty?
+      redirect_to new_watsons_path
+    else
+      ApplicationController.analyze(@watson_text)
+      watson = Watson.create(
+        text: @watson_text,
+        sentiment_label: @@result_hash["sentiment"]['document']['label'],
+        sentiment_score: @@result_hash["sentiment"]['document']['score'],
+        emotion_sadness: @@result_hash['emotion']['document']['emotion']['sadness'],
+        emotion_joy: @@result_hash['emotion']['document']['emotion']['joy'],
+        emotion_fear: @@result_hash['emotion']['document']['emotion']['fear'],
+        emotion_disgust: @@result_hash['emotion']['document']['emotion']['disgust'],
+        emotion_anger: @@result_hash['emotion']['document']['emotion']['anger'],
+        keywords: @@result_hash['keywords'],
+        categories: @@result_hash['categories']
+      )
+      redirect_to watson_path(Watson.last.id)
+    end
   end
 
   def edit
@@ -52,12 +42,12 @@ class WatsonsController < ApplicationController
     @watson = Watson.find(params[:id])
     @sun_text = params["watson"]["text"]
 
-    authenticator = Authenticators::IamAuthenticator.new(apikey: "")
+    authenticator = Authenticators::IamAuthenticator.new(apikey: ENV["NATURAL_LANGUAGE_UNDERSTANDING_APIKEY"])
     natural_language_understanding = NaturalLanguageUnderstandingV1.new(
     version: "2019-07-12",
     authenticator: authenticator)
 
-    natural_language_understanding.service_url = ""
+    natural_language_understanding.service_url = ENV["NATURAL_LANGUAGE_UNDERSTANDING_URL"]
     
     response = natural_language_understanding.analyze(
       text: @sun_text,
@@ -74,8 +64,7 @@ class WatsonsController < ApplicationController
       emotion_disgust: @result_hash['emotion']['document']['emotion']['disgust'],
       emotion_anger: @result_hash['emotion']['document']['emotion']['anger'],
       keywords: @result_hash['keywords'],
-      categories: @result_hash['categories'],
-      entities: @result_hash['entities']
+      categories: @result_hash['categories']
     )
     redirect_to watson_path(@watson)
   end
@@ -88,7 +77,7 @@ class WatsonsController < ApplicationController
   private
 
   def strong_params
-    params.require(:watson).permit(:text, :sentiment_label, :sentiment_score, :emotion_sadness, :emotion_joy, :emotion_fear, :emotion_disgust, :emotion_anger, :keywords, :categories, :entities)
+    params.require(:watson).permit(:text, :sentiment_label, :sentiment_score, :emotion_sadness, :emotion_joy, :emotion_fear, :emotion_disgust, :emotion_anger, :keywords, :categories)
   end
 
 end
