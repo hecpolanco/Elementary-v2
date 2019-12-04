@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
                 relations: {limit:3},  
                 sentiment:{}
             })
-          @@result_hash = response.result
+          @@text_analysis = response.result
     end
 
 

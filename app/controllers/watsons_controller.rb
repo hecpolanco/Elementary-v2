@@ -20,17 +20,33 @@ class WatsonsController < ApplicationController
       ApplicationController.analyze(@watson_text)
       watson = Watson.create(
         text: @watson_text,
-        sentiment_label: @@result_hash["sentiment"]['document']['label'],
-        sentiment_score: @@result_hash["sentiment"]['document']['score'],
-        emotion_sadness: @@result_hash['emotion']['document']['emotion']['sadness'],
-        emotion_joy: @@result_hash['emotion']['document']['emotion']['joy'],
-        emotion_fear: @@result_hash['emotion']['document']['emotion']['fear'],
-        emotion_disgust: @@result_hash['emotion']['document']['emotion']['disgust'],
-        emotion_anger: @@result_hash['emotion']['document']['emotion']['anger'],
-        keywords: @@result_hash['keywords'],
-        categories: @@result_hash['categories']
+        sentiment_label: @@text_analysis["sentiment"]['document']['label'],
+        sentiment_score: @@text_analysis["sentiment"]['document']['score'],
+        emotion_sadness: @@text_analysis['emotion']['document']['emotion']['sadness'],
+        emotion_joy: @@text_analysis['emotion']['document']['emotion']['joy'],
+        emotion_fear: @@text_analysis['emotion']['document']['emotion']['fear'],
+        emotion_disgust: @@text_analysis['emotion']['document']['emotion']['disgust'],
+        emotion_anger: @@text_analysis['emotion']['document']['emotion']['anger']
       )
-      redirect_to watson_path(Watson.last.id)
+      keywords = @@text_analysis["keywords"]
+      keywords.each do |keyword_hash|
+        Keyword.create(
+        text: keyword_hash["text"],
+        relevance: keyword_hash["relevance"],
+        count: keyword_hash["count"],
+        watson_id: watson.id
+      )
+      end
+
+      categories = @@text_analysis["categories"]
+      categories.each do |category_hash|
+        Category.create(
+          score: category_hash["score"],
+          label: category_hash["label"],
+          watson_id: watson.id
+        )
+      end
+      redirect_to watson_path(watson.id)
     end
   end
 

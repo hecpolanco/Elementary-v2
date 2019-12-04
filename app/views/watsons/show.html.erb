@@ -19,13 +19,22 @@ Emotion Analysis:
 </ul>
 <br>
 <br>
-Keywords:   <%= @watson.keywords %>
+Keywords:
+<br>
+<br>
+<% @watson.keywords.each do |keyword| %>
+    Text: <%= keyword.text.capitalize %><br>
+    Relevance: <%= keyword.relevance %><br>
+    Count: <%= keyword.count %><br>
+    <hr>
+    <% end %>
 <br>
 <br>
 Categories:
-<ul>
-<%= @watson.categories %> 
-</ul>
 <br>
-Entities:
-<%= @watson.entities %>
+<br>
+<% @watson.categories.each do |category| %> 
+    Label: <%= category.label.capitalize %><br>
+    Score: <%= category.score %><br>
+    <hr>
+<% end %>
