@@ -9,10 +9,12 @@ class WatsonsController < ApplicationController
   end
   
   def new
+    @slide = Slide.find(slide_id = rand(7..Slide.all.length))
     @watson = Watson.new
   end
 
   def create
+    
     @watson_text = params["watson"]["text"]    
     if @watson_text.empty?
       redirect_to new_watsons_path

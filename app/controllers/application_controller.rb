@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
 
     def self.authenticate
-        key = ENV["NATURAL_LANGUAGE_UNDERSTANDING_APIKEY"]
+        # key = ENV["NATURAL_LANGUAGE_UNDERSTANDING_APIKEY"]
 
-        authenticator = Authenticators::IamAuthenticator.new(apikey: key)
+        authenticator = Authenticators::IamAuthenticator.new(apikey: "gb0WN0tov2tn7z5pn_ixsZUSeeDBZnOIUgTJxkfrKPt5")
         @@nlu = NaturalLanguageUnderstandingV1.new(version: "2019-12-04", authenticator: authenticator)
-        @@nlu.service_url = ENV["NATURAL_LANGUAGE_UNDERSTANDING_URL"]
+        @@nlu.service_url = "https://gateway-wdc.watsonplatform.net/natural-language-understanding/api"
     end
 
     def self.analyze(object)

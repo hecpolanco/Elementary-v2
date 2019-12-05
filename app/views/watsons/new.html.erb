@@ -1,6 +1,7 @@
-<h1>Just what do you think you're doing... Gabe?</h1>
+<%= image_tag @slide.photo %>
+<br>
+<%= @slide.prompt %>
 <%= form_for @watson do |f| %>
-  <%= f.label :text %>:
   <%= f.text_area :text, :cols => "100", :rows => "10" %><br/>
   <%= f.submit "Save"%>
 <% end %>
