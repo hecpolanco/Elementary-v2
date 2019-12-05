@@ -5,7 +5,7 @@ include IBMWatson
 class WatsonsController < ApplicationController 
 
   def index
-    @watsons = Watson.all
+    @userwatsons = Userwatson.all
   end
   
   def new
@@ -14,8 +14,8 @@ class WatsonsController < ApplicationController
 
   def create
     @watson_text = params["watson"]["text"]    
-    if @watson_text.empty?
-      redirect_to new_watsons_path
+    if @watson_text.empty? || @watson_text.length < 20
+      redirect_to new_watson_path
     else
       ApplicationController.analyze(@watson_text)
       watson = Watson.create(
@@ -46,6 +46,11 @@ class WatsonsController < ApplicationController
           watson_id: watson.id
         )
       end
+
+      userwatson = Userwatson.create(
+        user_id: current_user.id,
+        watson_id: watson.id
+      )
       redirect_to watson_path(watson.id)
     end
   end
@@ -87,7 +92,6 @@ class WatsonsController < ApplicationController
 
   def show
     @watson = Watson.find(params[:id])
-
   end
 
   private

@@ -24,9 +24,6 @@ User.destroy_all
       emotion_fear: 0.034976,
       emotion_disgust: 0.014157,
       emotion_anger: 0.126209,
-      keywords: "mama",
-      categories: "art and entertainment/shows and events",
-     entities: "[]"
   })
 
 Userwatson.destroy_all

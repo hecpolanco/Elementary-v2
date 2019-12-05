@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+    protect_from_forgery with: :exception
+    before_action :authenticate_user!
 
     def self.authenticate
         key = ENV["NATURAL_LANGUAGE_UNDERSTANDING_APIKEY"]
@@ -10,7 +12,7 @@ class ApplicationController < ActionController::Base
 
     def self.analyze(object)
         authenticate
-
+        
         response = @@nlu.analyze(
             text: "#{object}",
             features: {
