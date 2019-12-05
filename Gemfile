@@ -10,6 +10,8 @@ gem 'sqlite3', '~> 1.4'
 # Use IBM Watson Go Watson!
 gem 'ibm_watson'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
