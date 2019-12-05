@@ -1,0 +1,7 @@
+<h1>WILL IT BLEND?</h1>
+
+<% @slides.each do |slide| %>
+    <%= link_to slide.keyword, slide_path(slide) %>
+    <br>
+    <hr>
+<% end %>
