@@ -4,12 +4,24 @@
     <p class="alert"><%= alert %></p>
 <% end %>
 <br>
-<h1>Here are all of your previous answers.</h1>
-    <% @userwatsons.each do |userwatson| %>
+<% if user_signed_in? %>
+    <% @array = @userwatsons.each do |userwatson| %>
         <% if userwatson.user_id == current_user.id %>
-        <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>
-        <%= link_to "Delete", delete_watson_path(userwatson.watson), method: :delete, :class => "btn btn-danger"  %>
-        <br>
-        <hr>
+            <% userwatson.watson.text.truncate(1) %>
         <% end %>
     <% end %>
+    
+    <% if @array.size < 2 %>
+        You have no submitted passages.
+    <% else %>
+        <h1>Here are all of your previous answers.</h1>
+        <% @userwatsons.each do |userwatson| %>
+            <% if userwatson.user_id == current_user.id %>
+                <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>
+                <%= link_to "Delete", delete_watson_path(userwatson.watson), method: :delete, :class => "btn btn-danger"  %>
+                <br>
+                <hr>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>
