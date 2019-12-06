@@ -1,7 +1,7 @@
-<%=link_to "Next slide?", new_watson_path %>
+<%= link_to "Back", watsons_path, :class => "btn btn-success" %><%=link_to "New Analysis", new_watson_path, :class => "btn btn-primary" %><br>
 <% if current_user.id == @watson.users.first.id %>
 <%= image_tag @slide %>
-
+<%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
 <h1>Thank you for your answer. Here are the results, human.</h1>
 Text: <%= @watson.text %>
 <br>

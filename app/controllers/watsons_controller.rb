@@ -9,7 +9,7 @@ class WatsonsController < ApplicationController
   end
   
   def new
-    @slide = "#{rand(54)}.jpg"
+    @slide = "#{rand(1..54)}.jpg"
     @watson = Watson.new
   end
 
