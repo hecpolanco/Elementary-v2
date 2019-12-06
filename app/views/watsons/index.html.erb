@@ -9,7 +9,6 @@
         You have no submitted passages.
     <% else %>
     <br>
-        <h3>Watson says:</h3>
         <% @userwatsons.each do |userwatson| %>
             <% if userwatson.user_id == current_user.id %>
                 <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>
