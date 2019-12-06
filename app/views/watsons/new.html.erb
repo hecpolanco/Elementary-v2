@@ -1,10 +1,8 @@
-<%= link_to "Back", watsons_path, :class => "btn btn-success" %><br>
-<%= image_tag @slide, class: 'img-fluid center' %>
+<%= image_tag @slide.photo, class: 'img-fluid.max-width: 100%; center' %>
 <br>
-
-<h1>Please answer in the form of full sentences. I know you are capable of it.</h1>
+<h1><%=  @slide.prompt%></h1>
+<h6>Please answer in the form of full sentences. I know you are capable of it.</h6>
 <%= form_for @watson do |f| %>
-  <%= f.label :text %>:
   <%= f.text_area :text, :cols => "100", :rows => "10" %><br/>
   <%= f.submit "Save"%>
 <% end %>

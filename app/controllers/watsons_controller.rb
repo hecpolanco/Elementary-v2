@@ -9,7 +9,7 @@ class WatsonsController < ApplicationController
   end
   
   def new
-    @slide = "#{rand(1..54)}.jpg"
+    @slide = Slide.find(slide_id = rand(19..36))
     @watson = Watson.new
   end
 
@@ -74,7 +74,7 @@ class WatsonsController < ApplicationController
     
     response = natural_language_understanding.analyze(
       text: @sun_text,
-      features: {emotion: {}, categories: {limit:3}, entities: {limit:3}, keywords: {limit:3}, relations: {limit:3},  sentiment:{}})
+      features: {emotion: {}, categories: {limit:3}, keywords: {limit:3}, relations: {limit:3},  sentiment:{}})
     @result_hash = response.result
     
     @watson.update(
@@ -93,7 +93,6 @@ class WatsonsController < ApplicationController
   end
 
   def show
-    @slide = "#{rand(54)}.jpg"
     @watson = Watson.find(params[:id])
   end
 

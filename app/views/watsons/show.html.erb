@@ -1,19 +1,16 @@
-<%= link_to "Back", watsons_path, :class => "btn btn-success" %><%=link_to "New Analysis", new_watson_path, :class => "btn btn-primary" %><br>
+<br>
 <% if current_user.id == @watson.users.first.id %>
-<%= image_tag @slide %>
-<%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
-<h1>Thank you for your answer. Here are the results, human.</h1>
-Text: <%= @watson.text %>
-<br>
-<%= button_to 'Edit Text', edit_watson_path(@watson), :method => :get %>
-<br>
-Sentiment Analysis:
-<br>
-<br>
-<%= number_to_percentage(@watson.sentiment_score * 100, precision: 1) + " " + @watson.sentiment_label.capitalize %>
-<br>
-<br>
-Emotion Analysis:
+<h3>Watson received:</h3>
+&nbsp <div class="container"><center><%= @watson.text %></center></div>
+<br><hr><br>
+<h3>Watson says:</h3>
+<div class="container"><center>
+Your text is <font color="limegreen"><%= number_to_percentage(@watson.sentiment_score * 100, precision: 1) + " " + @watson.sentiment_label %></font> according to my supercomputer standards. See the rest of my analysis below:
+</center></div>
+<br><br>
+<div class="row">
+        <div class="col-md-4">
+            Emotion Analysis:
 <ul>
 <li>Joy: <%= number_to_percentage(@watson.emotion_joy.round(3) * 100, precision: 1) %></li>
 <li>Sadness: <%= number_to_percentage(@watson.emotion_sadness.round(3) * 100, precision: 1) %></li>
@@ -21,27 +18,32 @@ Emotion Analysis:
 <li>Disgust: <%= number_to_percentage(@watson.emotion_disgust.round(3) * 100, precision: 1) %></li>
 <li>Anger: <%= number_to_percentage(@watson.emotion_anger.round(3) * 100, precision: 1) %></li>
 </ul>
-<br>
-<br>
-Keywords:
+        </div>
+        <div class="col-md-4">
+        Keywords:
 <br>
 <br>
 <% @watson.keywords.each do |keyword| %>
     Text: <%= keyword.text.capitalize %><br>
     Relevance: <%= keyword.relevance %><br>
     Count: <%= keyword.count %><br>
-    <hr>
     <% end %>
-<br>
-<br>
-Categories:
+        </div>
+        <div class="col-md-4">
+        Categories:
 <br>
 <br>
 <% @watson.categories.each do |category| %> 
     Label: <%= category.label.capitalize %><br>
     Score: <%= category.score %><br>
-    <hr>
 <% end %>
+        </div>
+</div>
+        <br>
+        <hr>
+        <br>
+        &nbsp <%= link_to 'Edit Text', edit_watson_path(@watson), :method => :get, :class => "btn btn-light" %> &nbsp
+<%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
 <% else %>
 Sorry!
 <% end %>

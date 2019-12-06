@@ -1,20 +1,15 @@
-<%=link_to "Take test", new_watson_path, :class => "btn btn-primary" %>
-<br>
-<% if user_signed_in? %>
-    <p class="alert"><%= alert %></p>
-<% end %>
-<br>
 <% if user_signed_in? %>
     <% @array = @userwatsons.each do |userwatson| %>
         <% if userwatson.user_id == current_user.id %>
             <% userwatson.watson.text.truncate(1) %>
         <% end %>
-    <% end %>
+    <% end.size %>
     
-    <% if @array.size < 2 %>
+    <% if @array.size < 1 %>
         You have no submitted passages.
     <% else %>
-        <h1>Here are all of your previous answers.</h1>
+    <br>
+        <h3>Watson says:</h3>
         <% @userwatsons.each do |userwatson| %>
             <% if userwatson.user_id == current_user.id %>
                 <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>

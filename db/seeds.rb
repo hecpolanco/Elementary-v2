@@ -33,13 +33,13 @@
 #   })
 
 Slide.create({
-  photo: "1.jpg",
-  keyword: "1" ,
+  photo: "vk1.jpg",
+  keyword: "vk1" ,
   prompt: "Someone gives you a calfskin wallet for your birthday. How do you react?",
 })
 Slide.create({
-  photo: "2.jpg",
-  keyword: "2" ,
+  photo: "vk2.jpg",
+  keyword: "vk2" ,
   prompt: "Someone gives you a calfskin wallet for your birthday. How do you react?",
 })
 Slide.create({
