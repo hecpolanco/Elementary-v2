@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_152910) do
+ActiveRecord::Schema.define(version: 2019_12_06_001414) do
 
   create_table "categories", force: :cascade do |t|
     t.float "score"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 2019_12_05_152910) do
     t.integer "watson_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "slides", force: :cascade do |t|
+    t.string "photo"
+    t.string "keyword"
+    t.text "prompt"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "slidewatsons", force: :cascade do |t|
+    t.integer "slide_id"
+    t.integer "watson_id"
   end
 
   create_table "users", force: :cascade do |t|

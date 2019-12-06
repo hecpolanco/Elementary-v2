@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get	'/watsons/:id', to: 'watsons#show', as: 'watson'
   get '/watsons/:id/edit', to: 'watsons#edit', as: 'edit_watson'
   patch '/watsons/:id', to: 'watsons#update'
+  delete '/watsons/:id', to: 'watsons#destroy', as: 'delete_watson'
 end

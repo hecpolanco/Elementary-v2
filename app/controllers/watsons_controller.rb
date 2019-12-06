@@ -9,6 +9,7 @@ class WatsonsController < ApplicationController
   end
   
   def new
+    @slide = "#{rand(54)}.jpg"
     @watson = Watson.new
   end
 
@@ -28,6 +29,7 @@ class WatsonsController < ApplicationController
         emotion_disgust: @@text_analysis['emotion']['document']['emotion']['disgust'],
         emotion_anger: @@text_analysis['emotion']['document']['emotion']['anger']
       )
+
       keywords = @@text_analysis["keywords"]
       keywords.each do |keyword_hash|
         Keyword.create(
@@ -91,7 +93,14 @@ class WatsonsController < ApplicationController
   end
 
   def show
+    @slide = "#{rand(54)}.jpg"
     @watson = Watson.find(params[:id])
+  end
+
+  def destroy
+    watson = Watson.find(params[:id])
+    watson.destroy
+    redirect_to watsons_path
   end
 
   private
