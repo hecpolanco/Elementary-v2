@@ -31,14 +31,14 @@ Anger: <%= number_to_percentage(@watson.emotion_anger.round(3) * 100, precision:
 <br>
 <br>
 <% @watson.categories.each do |category| %> 
-    Label: <%= category.label.capitalize %><br>
+    Label: <%= category.label.capitalize %><br><br>
 <% end %>
         </div>
 </div>
         <br>
         <hr>
-        &nbsp <%= link_to 'Update Analysis', edit_watson_path(@watson), :method => :get, :class => "btn btn-light" %> 
-<%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
+        <%= link_to 'Update Analysis', edit_watson_path(@watson), :method => :get, :class => "btn btn-light" %> 
+        <%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
 <br>
 <% else %>
 Sorry!

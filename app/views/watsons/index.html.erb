@@ -9,13 +9,31 @@
         You have no submitted passages.
     <% else %>
     <br>
-        <% @userwatsons.each do |userwatson| %>
-            <% if userwatson.user_id == current_user.id %>
-                <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>
-                <%= link_to "Delete", delete_watson_path(userwatson.watson), method: :delete, :class => "btn btn-danger"  %>
-                <br>
-                <hr>
-            <% end %>
+    <br>
+        <table class="table table-bordered table-light" >
+  <thead>
+    <tr>
+      <th scope="col" colspan="1">Analyzed Texts</th>
+      <th scope="col">Sentiment</th>
+      <th scope="col">Score</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @userwatsons.each do |userwatson| %>
+        <% if userwatson.user_id == current_user.id %>
+            <tr>
+                <td><%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %></th>
+                <td><%= userwatson.watson.sentiment_label.capitalize %></td>
+                <td><%= number_to_percentage(userwatson.watson.sentiment_score * 100, precision: 1) %></td>
+                <td>
+                    <%= link_to 'Edit', edit_watson_path(userwatson.watson), :method => :get, :class => "btn btn-secondary" %> 
+                    <%= link_to "Delete", delete_watson_path(userwatson.watson), method: :delete, :class => "btn btn-danger"  %>
+                </td>
+            </tr>
         <% end %>
+    <% end %>
+  </tbody>
+</table>
     <% end %>
 <% end %>

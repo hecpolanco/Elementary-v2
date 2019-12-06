@@ -1,6 +1,13 @@
-<h1>Just what do you think you're doing... Gabe?</h1>
+<br>
+<br>
+<div class="row">
+  <div class="col-md-6">
+<h6>Watson says: </h6>
+<h6>Please write your answer in full sentences. I know you are capable.</h6>
+<br>
 <%= form_for @watson do |f| %>
-  <%= f.label :text %>:
-  <%= f.text_area :text, :cols => "100", :rows => "10" %><br/>
-  <%= f.submit "Save"%>
+  <%= f.text_area :text, :cols => "62", :rows => "10" %><br/><br>
+  <%= f.submit "Re-Analyze", :class => "btn btn-success"%>
 <% end %>
+  </div>
+</div>

@@ -9,7 +9,8 @@ class WatsonsController < ApplicationController
   end
   
   def new
-    @slide = Slide.find(slide_id = rand(19..36))
+    allslides = Slide.all.to_a
+    @slide = allslides.sample
     @watson = Watson.new
   end
 
