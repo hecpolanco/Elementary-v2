@@ -1,4 +1,8 @@
-<h1>Lets see the results kids!</h1>
+<%=link_to "Next slide?", new_watson_path %>
+<% if current_user.id == @watson.users.first.id %>
+<%= image_tag @slide %>
+
+<h1>Thank you for your answer. Here are the results, human.</h1>
 Text: <%= @watson.text %>
 <br>
 <%= button_to 'Edit Text', edit_watson_path(@watson), :method => :get %>
@@ -37,4 +41,7 @@ Categories:
     Label: <%= category.label.capitalize %><br>
     Score: <%= category.score %><br>
     <hr>
+<% end %>
+<% else %>
+Sorry!
 <% end %>

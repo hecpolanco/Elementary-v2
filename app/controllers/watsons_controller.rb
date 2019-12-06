@@ -5,17 +5,18 @@ include IBMWatson
 class WatsonsController < ApplicationController 
 
   def index
-    @watsons = Watson.all
+    @userwatsons = Userwatson.all
   end
   
   def new
+    @slide = "#{rand(54)}.jpg"
     @watson = Watson.new
   end
 
   def create
     @watson_text = params["watson"]["text"]    
-    if @watson_text.empty?
-      redirect_to new_watsons_path
+    if @watson_text.empty? || @watson_text.length < 20
+      redirect_to new_watson_path
     else
       ApplicationController.analyze(@watson_text)
       watson = Watson.create(
@@ -28,6 +29,7 @@ class WatsonsController < ApplicationController
         emotion_disgust: @@text_analysis['emotion']['document']['emotion']['disgust'],
         emotion_anger: @@text_analysis['emotion']['document']['emotion']['anger']
       )
+
       keywords = @@text_analysis["keywords"]
       keywords.each do |keyword_hash|
         Keyword.create(
@@ -46,6 +48,11 @@ class WatsonsController < ApplicationController
           watson_id: watson.id
         )
       end
+
+      userwatson = Userwatson.create(
+        user_id: current_user.id,
+        watson_id: watson.id
+      )
       redirect_to watson_path(watson.id)
     end
   end
@@ -86,8 +93,14 @@ class WatsonsController < ApplicationController
   end
 
   def show
+    @slide = "#{rand(54)}.jpg"
     @watson = Watson.find(params[:id])
+  end
 
+  def destroy
+    watson = Watson.find(params[:id])
+    watson.destroy
+    redirect_to watsons_path
   end
 
   private

@@ -1,7 +1,10 @@
-<h1>Here are all of your texts.</h1>
+<%=link_to "Take test", new_watson_path %>
 
-<% @watsons.each do |watson| %>
-    <%= link_to watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(watson) %>
-    <br>
-    <hr>
-<% end %>
+<h1>Here are all of your previous answers.</h1>
+    <% @userwatsons.each do |userwatson| %>
+        <% if userwatson.user_id == current_user.id %>
+        <%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %>
+        <br>
+        <hr>
+        <% end %>
+    <% end %>
