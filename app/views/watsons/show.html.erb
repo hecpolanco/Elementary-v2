@@ -1,10 +1,12 @@
 <br>
 <% if current_user.id == @watson.users.first.id %>
+<p style="text-align:right"><%= link_to 'Re-Analyze', edit_watson_path(@watson), :method => :get, :class => "btn btn-light" %> 
+        <%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %></p>
 <h3>Watson received:</h3>
-&nbsp <div class="container"><center><%= @watson.text %></center></div><hr><br>
+<div class="container"><center><%= @watson.text %></center></div><hr><br>
 <h3>Watson says:</h3>
 <div class="container"><center>
-Your text is <font color="limegreen"><%= number_to_percentage(@watson.sentiment_score * 100, precision: 1) + " " + @watson.sentiment_label %></font> according to my supercomputing standards. See the rest of my analysis below:
+Your text is <font color="limegreen"><%= number_to_percentage(@watson.sentiment_score * 100, precision: 1) + " " + @watson.sentiment_label %></font> according to my supercomputing standards. See my parsed information below:
 </center></div>
 <br><br>
 <div class="row">
@@ -31,15 +33,10 @@ Anger: <%= number_to_percentage(@watson.emotion_anger.round(3) * 100, precision:
 <br>
 <br>
 <% @watson.categories.each do |category| %> 
-    Label: <%= category.label.capitalize %><br><br>
+    <%= category.label.capitalize %><br><br>
 <% end %>
         </div>
 </div>
-        <br>
-        <hr>
-        <%= link_to 'Update Analysis', edit_watson_path(@watson), :method => :get, :class => "btn btn-light" %> 
-        <%= link_to "Delete", delete_watson_path(@watson), method: :delete, :class => "btn btn-danger"  %>
-<br>
 <% else %>
 Sorry!
 <% end %>
