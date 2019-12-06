@@ -10,20 +10,23 @@
     <% else %>
     <br>
     <br>
-        <table class="table table-bordered table-light" >
+    <div class="card">
+  <div class="card-body">
+        <table class="table table-striped table-dark" >
   <thead>
     <tr>
       <th scope="col" colspan="1">Analyzed Texts</th>
       <th scope="col">Sentiment</th>
       <th scope="col">Score</th>
-      <th scope="col">Action</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
+  <br>
     <% @userwatsons.each do |userwatson| %>
         <% if userwatson.user_id == current_user.id %>
             <tr>
-                <td><%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %></th>
+                <th scope="row"><%= link_to userwatson.watson.text.truncate(100, separator: ' ', omission: '... (continued)'), watson_path(userwatson.watson) %></th>
                 <td><%= userwatson.watson.sentiment_label.capitalize %></td>
                 <td><%= number_to_percentage(userwatson.watson.sentiment_score * 100, precision: 1) %></td>
                 <td>
@@ -35,5 +38,7 @@
     <% end %>
   </tbody>
 </table>
+  </div>
+</div>
     <% end %>
 <% end %>
